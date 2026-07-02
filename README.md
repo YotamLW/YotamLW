@@ -1,8 +1,10 @@
-# WebIE (Website of Independent Learning) 
+# Information 
 
+## Projects 
 
+WebIE (Website of Independent Learning) 
 
-# Licensing 
+## Licensing 
 
 Code - Licensed under AGPL v3.0 (See 'LICENSE.txt') 
 
