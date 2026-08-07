@@ -1,5 +1,14 @@
 \verbhyphens{ /.}
 \verbchar`
+\def \codeGrey {\setgreycolor{.5}}
+
+\fontfam[Heros]
+\fontfam[Termes]
+\fontdef\fontText{\Heros\rm}
+\fontdef\fontCode{\Heros\rm}
+
+\def \com #1 {{\fontCode\setgreycolor{.5}#1\setgreycolor{.0}\fontText}}
+
 
 \_def\_printchap #1{
   \_vfill\_supereject

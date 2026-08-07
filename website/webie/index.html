@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Website for Independent Education">
+    <title>WebIE</title>
+    <link rel="icon" type="image/x-icon" sizes="16x16" href="/favicon.ico?v=2">
+    <link rel="stylesheet" href="/sources/style.css">
+</head>
+
+<body>
+    <canvas id="screen"></canvas>
+    <script src="/sources/macros.js"></script>
+    <script src="/sources/user.js"></script>
+    <script src="./pages/files.js"></script>
+    <script src="/sources/pages.js"></script>
+    <script src="/sources/mathjax/macros.js"></script>
+    <script src="/sources/mathjax/tex-chtml.js"></script>
+    <div id="pageContent" z-index="1"><p></p></div>
+</body>
+
+<script>
+
+page = document.getElementById("pageContent")
+path = checkHash(window.location.hash)
+// reads initial hash, sees if it is valid and loads either that page or home 
+//if (window.location.hash) {
+//  let hashPath = window.location.hash.split("#")[1]
+//  path = (textFiles.include(hashPath) || codeFiles.include(hashPath)) ? hashPath : home
+//} else {path = home}
+
+loadPage(path, false)
+history.replaceState({path}, "", `#${path}`)
+
+</script>
