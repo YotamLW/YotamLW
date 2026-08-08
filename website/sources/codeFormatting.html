@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<script>
+
+let code = `
+use rodio::{Decoder, OutputStream, Sink};
+use std::fs::File;
+use std::io::BufReader;
+
+fn main() {
+  let (_stream, stream_handle) = OutputStream::try_default().unwrap();
+
+  let sink = Sink::try_new(&stream_handle).unwrap();
+
+  let file = File::open("/home/bob/Music/Songs/tmp/test.mp3").unwrap();
+  let source = Decoder::new(BufReader::new(file)).unwrap();
+
+  sink.append(source);
+
+  sink.sleep_until_end();
+}
+`
+
+let start = 1
+let lines = code.split("\n")
+lines = lines.splice(1, lines.length - 2)
+let digits = lines.length.toString().length
+let newLines = []
+for (let line = 0; line < lines.length; line++) {newLines.push("0".repeat(digits - ((line + start).toString().length)) + (line + start).toString() + " " + lines[line])}
+console.log(newLines.join("\n"))
+
+</script>

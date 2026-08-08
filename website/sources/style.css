@@ -1,2 +1,28 @@
 h2 {color: #000066}
 h3 {color: #4444aa}
+
+p {text-align: justify}
+
+c {
+  display: inline;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: #f2f2f2;
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+
+pre {
+  display: block;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: #f2f2f2;
+  padding: 0.75em 1em;
+  border-radius: 5px;
+  line-height: 1.4;
+}
