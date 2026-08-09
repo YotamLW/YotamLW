@@ -14,9 +14,9 @@
 
 <h2>2 Initial Design</h2>
 
-<p>For the initial design, I will be setting up a background daemon to respond to terminal commands. I was recommended Rust to code this (also I wanted to learn it), but I have never used Rust before (JavaScript one-trick), so Claude will be holding my hand a lot. Despite this, I want to learn so I will explain what the code does and how Rust works.</p>
+<p>For the initial design, I will be setting up a background daemon to respond to terminal commands. I was recommended Rust to code this (also I wanted to learn it), but I have never used Rust before (JavaScript one-trick), so Claude will be holding my hand a lot. Despite this, I want to learn so I will explain what the code does and how Rust works (using JavaScript .</p>
 
-<h3>2.1 Background Music</h3>
+<h3>2.1 Background Playback Daemon</h3>
 
 <p>The code below was used to test simple file playback.</p>
 <pre>
@@ -30,13 +30,79 @@
 08   let sink = Sink::try_new(&stream_handle).unwrap();
 09 
 10   let file = File::open("/home/bob/Music/Songs/tmp/test.mp3").unwrap();
-11   let source = Decoder::new(BufReader::new(file)).unwrap();
-12 
-13   sink.append(source);
-14 
-15   sink.sleep_until_end();
-16 }
+11
+12   let source = Decoder::new(BufReader::new(file)).unwrap();
+13 
+14   sink.append(source);
+15 
+16   sink.sleep_until_end();
+17 }
 </pre>
-<p></p>
+<p>At the top, the <c>use</c> lines are importing library commands to use. The <c>rodio</c> library adds audio handling commands. The <c>main()</c> function is called by default when the file is run. Line <c>06</c> tries to set up audio on the default device playback. I also learned that having <c>_stream</c> is for variables that need to be kept but not used, as if dropped audio would not play and if not marked with _ Rust would give a warning as it is not used directly. Line <c>08</c> declares the sink which is where the audio goes to be played. The <c>&</c> prefix for variables only lets the function look at the variable. If the variables was passed as is it would be moved from the current scope to the function scope and be inaccessible outside afterwards. Line <c>12</c> decodes the audio file. BufReader makes files process in chunks to reduce system calls so saves on resources. The <c>unwrap()</c> method was used on most commands temporarily which basically does <c>if (error) {crash} else {return value}</c>.</p>
+<pre>
+01 use rodio::{Decoder, DeviceSinkBuilder, Player};
+02 use std::os::unix::net::UnixListener;
+03 use std::io::{BufReader, BufRead};
+04 use std::fs::File;
+05 
+06 const SOCKET_PATH: &str = "/tmp/music-daemon.sock";
+07 const MUSIC_PATH: &str = "/home/bob/Music/Songs/";
+08 
+09 fn main () {
+10   
+11   let stream_handle = DeviceSinkBuilder::open_default_sink().expect("audio stream failed");
+12   let player = Player::connect_new(stream_handle.mixer());
+13 
+14   let _ = std::fs::remove_file(SOCKET_PATH);
+15   let listener = UnixListener::bind(SOCKET_PATH).unwrap();
+16   println!("Daemon listening at {}", SOCKET_PATH);
+17 
+18   for stream in listener.incoming() {
+19     let stream = stream.unwrap();
+20     let reader = BufReader::new(stream);
+21     for line in reader.lines() {
+22       let line = line.unwrap();
+23       handle_command(&line, &player);
+24     }
+25   }
+26 
+27 }
+28 
+29 fn handle_command (line: &str, player: &Player) {
+30 
+31   let mut parts = line.splitn(2, ' ');
+32   let command = parts.next().unwrap_or("");
+33   let filename = parts.next().unwrap_or("");
+34   let arg = format!("{}{}", MUSIC_PATH, filename);
+35   
+36   match command {
+37 
+38     "play" =&gt; {
+39       match File::open(&arg) {
+40         Ok(file) =&gt; {
+41           match Decoder::new(BufReader::new(file)) {
+42             Ok(source) =&gt; {
+43               player.stop();
+44               player.append(source);
+45               player.play();
+46               println!("Playing {}", arg);
+47             }
+48             Err(e) =&gt; println!("Failed to decode {} : {}", arg, e),
+49           }
+50         }
+51         Err(e) =&gt; println!("Failed to load {} : {}", arg, e),
+52       }
+53     }
+54 
+55     "stop" =&gt; {
+56       player.stop();
+57     }
+58 
+59     _ =&gt; println!("Invalid command : {}", command),
+60 
+61   }
+62 
+63 }
+</pre>
 
 <br><a href="javascript:history.back()">back</a><br>

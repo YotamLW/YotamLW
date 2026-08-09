@@ -3,25 +3,73 @@
 <script>
 
 let code = `
-use rodio::{Decoder, OutputStream, Sink};
+use rodio::{Decoder, DeviceSinkBuilder, Player};
+use std::os::unix::net::UnixListener;
+use std::io::{BufReader, BufRead};
 use std::fs::File;
-use std::io::BufReader;
 
-fn main() {
-  let (_stream, stream_handle) = OutputStream::try_default().unwrap();
+const SOCKET_PATH: &str = "/tmp/music-daemon.sock";
+const MUSIC_PATH: &str = "/home/bob/Music/Songs/";
 
-  let sink = Sink::try_new(&stream_handle).unwrap();
+fn main () {
+  
+  let stream_handle = DeviceSinkBuilder::open_default_sink().expect("audio stream failed");
+  let player = Player::connect_new(stream_handle.mixer());
 
-  let file = File::open("/home/bob/Music/Songs/tmp/test.mp3").unwrap();
-  let source = Decoder::new(BufReader::new(file)).unwrap();
+  let _ = std::fs::remove_file(SOCKET_PATH);
+  let listener = UnixListener::bind(SOCKET_PATH).unwrap();
+  println!("Daemon listening at {}", SOCKET_PATH);
 
-  sink.append(source);
+  for stream in listener.incoming() {
+    let stream = stream.unwrap();
+    let reader = BufReader::new(stream);
+    for line in reader.lines() {
+      let line = line.unwrap();
+      handle_command(&line, &player);
+    }
+  }
 
-  sink.sleep_until_end();
+}
+
+fn handle_command (line: &str, player: &Player) {
+
+  let mut parts = line.splitn(2, ' ');
+  let command = parts.next().unwrap_or("");
+  let filename = parts.next().unwrap_or("");
+  let arg = format!("{}{}", MUSIC_PATH, filename);
+  
+  match command {
+
+    "play" => {
+      match File::open(&arg) {
+        Ok(file) => {
+          match Decoder::new(BufReader::new(file)) {
+            Ok(source) => {
+              player.stop();
+              player.append(source);
+              player.play();
+              println!("Playing {}", arg);
+            }
+            Err(e) => println!("Failed to decode {} : {}", arg, e),
+          }
+        }
+        Err(e) => println!("Failed to load {} : {}", arg, e),
+      }
+    }
+
+    "stop" => {
+      player.stop();
+    }
+
+    _ => println!("Invalid command : {}", command),
+
+  }
+
 }
 `
 
 let start = 1
+code = code.replaceAll("<", "&lt;").replaceAll(">", "&gt;")
 let lines = code.split("\n")
 lines = lines.splice(1, lines.length - 2)
 let digits = lines.length.toString().length
