@@ -1,3 +1,7 @@
+h1 {
+  text-align: center;
+  font-size: 3em;
+}
 h2 {color: #000066}
 h3 {color: #4444aa}
 
@@ -25,4 +29,17 @@ pre {
   padding: 0.75em 1em;
   border-radius: 5px;
   line-height: 1.4;
+}
+
+img {
+  max-width: 1000px;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+#pageContent {
+  max-width: 1000px;
+  margin: 0 auto;
 }

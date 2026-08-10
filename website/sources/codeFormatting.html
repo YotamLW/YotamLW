@@ -3,66 +3,31 @@
 <script>
 
 let code = `
-use rodio::{Decoder, DeviceSinkBuilder, Player};
-use std::os::unix::net::UnixListener;
-use std::io::{BufReader, BufRead};
-use std::fs::File;
+use std::os::unix::net::UnixStream;
+use std::io::Write;
+use std::env;
 
 const SOCKET_PATH: &str = "/tmp/music-daemon.sock";
-const MUSIC_PATH: &str = "/home/bob/Music/Songs/";
 
-fn main () {
-  
-  let stream_handle = DeviceSinkBuilder::open_default_sink().expect("audio stream failed");
-  let player = Player::connect_new(stream_handle.mixer());
+fn main() {
 
-  let _ = std::fs::remove_file(SOCKET_PATH);
-  let listener = UnixListener::bind(SOCKET_PATH).unwrap();
-  println!("Daemon listening at {}", SOCKET_PATH);
+  let args: Vec<String> = env::args().skip(1).collect();
 
-  for stream in listener.incoming() {
-    let stream = stream.unwrap();
-    let reader = BufReader::new(stream);
-    for line in reader.lines() {
-      let line = line.unwrap();
-      handle_command(&line, &player);
-    }
+  if args.is_empty() {
+    eprintln!("Usage: strawberry <command> <argument>");
+    return;
   }
 
-}
+  let command = args.join(" ");
 
-fn handle_command (line: &str, player: &Player) {
-
-  let mut parts = line.splitn(2, ' ');
-  let command = parts.next().unwrap_or("");
-  let filename = parts.next().unwrap_or("");
-  let arg = format!("{}{}", MUSIC_PATH, filename);
-  
-  match command {
-
-    "play" => {
-      match File::open(&arg) {
-        Ok(file) => {
-          match Decoder::new(BufReader::new(file)) {
-            Ok(source) => {
-              player.stop();
-              player.append(source);
-              player.play();
-              println!("Playing {}", arg);
-            }
-            Err(e) => println!("Failed to decode {} : {}", arg, e),
-          }
-        }
-        Err(e) => println!("Failed to load {} : {}", arg, e),
+  match UnixStream::connect(SOCKET_PATH) {
+    Ok(mut stream) => {
+      let msg = format!("{}\n", command);
+      if let Err(e) = stream.write_all(msg.as_bytes()) {
+        eprintln!("Failed to send command : {}", e);
       }
     }
-
-    "stop" => {
-      player.stop();
-    }
-
-    _ => println!("Invalid command : {}", command),
-
+    Err(e) => eprintln!("Connection failed : {}", e)
   }
 
 }
