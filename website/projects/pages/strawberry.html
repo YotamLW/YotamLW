@@ -1,4 +1,4 @@
-<h1>STRAWBERRY - PHASE 1</h1><br>
+<h1 class="projectTitle">STRAWBERRY - PHASE 1</h1>
 
 <h2>1 Introduction</h2>
 
@@ -10,7 +10,7 @@
 
 <h2>2 Setting up Audio Playback</h2>
 
-<p>The first thing I do will be to will be set up a background daemon to respond to terminal commands. I was recommended Rust to code this (also I wanted to learn it), but I have never used Rust before (JavaScript one-trick), so Claude will be holding my hand a lot. Despite this, I want to learn so I will explain what the code does and how Rust works (using JavaScript comparisons probably).</p>
+<p>The first thing I do will be to set up a background daemon to respond to terminal commands. I was recommended Rust to code this (also I wanted to learn it), but I have never used Rust before (JavaScript one-trick), so Claude will be holding my hand a lot. Despite this, I want to learn so I will explain what the code does and how Rust works (using JavaScript comparisons probably).</p>
 
 <h3>2.1 File Playback</h3>
 
@@ -146,5 +146,3 @@
 <p>Line <c>09</c> has quite a few new things. The <c>collect()</c> function can combine items into multiple types, so the variable type needs to be specified, which is done by <c>: type =</c> (this is also done for function inputs upon declaration, like in <c>handle_command()</c>). In this case the type is <c>Vec&lt;String&gt;</c> which is a list (dynamic size) of strings. Line <c>16</c> is the same as JavaScript; joins elements of <c>args</c> into one string with spaces (line <c>20</c> adds a <c>\n</c> to separate future commands). Line <c>21</c> only handles a potential error returned by <c>stream.write_all()</c> because if it works then there is nothing more for the program to do.</p>
 
 <h2>3 Specification</h2>
-
-<br><a href="javascript:history.back()">back</a><br>

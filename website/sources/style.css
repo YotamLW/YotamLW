@@ -1,45 +1,90 @@
-h1 {
+/*Page formatting*/
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--body-color);
+}
+
+#banner {
+  height: 50px;
+  background-color: var(--banner-color);
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  padding-left: 5px;
+}
+
+.bannerButton {
+  background-color: var(--button-color);
+  color: var(--button-text-color);
+  font-size: 1em;
+  cursor: pointer;
+
+  border: 0;
+  border-radius: 0;
+  height: 40px;
+  padding: 0 1em;
+}
+
+#pageContent {
+  width: 100%;
+  max-width: 1000px;
+  min-height: calc(100vh - 50px);
+  background-color: var(--page-color);
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 0em 1em;
+}
+
+
+/*Text formatting*/
+
+.projectTitle {
   text-align: center;
   font-size: 3em;
 }
-h2 {color: #000066}
-h3 {color: #4444aa}
+h1 {color: var(--title-color)}
+h2 {color: var(--chapter-color)}
+h3 {color: var(--section-color)}
 
-p {text-align: justify}
+p {
+  color: var(--text-color);
+  text-align: justify;
+}
 
-c {
-  display: inline;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
+a {color: var(--link-color)}
+li {color: var(--text-color)}
+
+c, pre {
   font-family: ui-monospace, Menlo, Consolas, monospace;
   font-size: 0.9em;
-  background: #f2f2f2;
+  color: var(--text-color);
+  background: var(--code-body-color);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  display: inline;
   padding: 0.1em 0.35em;
   border-radius: 3px;
 }
 
 pre {
   display: block;
-  overflow-x: auto;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-  font-family: ui-monospace, Menlo, Consolas, monospace;
-  font-size: 0.9em;
-  background: #f2f2f2;
   padding: 0.75em 1em;
   border-radius: 5px;
   line-height: 1.4;
 }
 
 img {
-  max-width: 1000px;
+  max-height: 600px;
   width: 100%;
   height: auto;
   display: block;
-  margin: 0 auto;
-}
-
-#pageContent {
-  max-width: 1000px;
   margin: 0 auto;
 }

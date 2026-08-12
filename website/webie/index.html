@@ -13,18 +13,23 @@
     <canvas id="screen"></canvas>
     <script src="/sources/macros.js"></script>
     <script src="/sources/user.js"></script>
-    <script src="webie/pages/files.js"></script>
+    <script src="/webie/pages/files.js"></script>
     <script src="/sources/pages.js"></script>
     <script src="/sources/mathjax/macros.js"></script>
     <script src="/sources/mathjax/tex-chtml.js"></script>
-    <div id="pageContent" z-index="1"><p></p></div>
+    <div id="banner" z-index="1"></div>
+    <div id="pageContent" z-index="1"></div>
 </body>
 
 <script>
 
+// Banner Loading
+banner = document.getElementById("banner")
+loadBanner()
+
+// Page Loading
 page = document.getElementById("pageContent")
 path = checkHash(window.location.hash)
-
 loadPage(path, false)
 history.replaceState({path}, "", `#${path}`)
 

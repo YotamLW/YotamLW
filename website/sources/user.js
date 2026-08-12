@@ -34,72 +34,88 @@ let h = canvas.height // screen height
 let paused = true
 
 function refreshScreen () {
-    paused = true
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
-    w = canvas.width
-    h = canvas.height
-    c.clearRect(0, 0, w, h)
+  paused = true
+  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight
+  w = canvas.width
+  h = canvas.height
+  c.clearRect(0, 0, w, h)
 }
 
 function loop () {
-    if (paused) return
-    c.clearRect(0, 0, w, h)
-    c.fillRect(w-10, h-10, 10, 10)
-    window.requestAnimationFrame(loop)
+  if (paused) return
+  c.clearRect(0, 0, w, h)
+  c.fillRect(w-10, h-10, 10, 10)
+  window.requestAnimationFrame(loop)
 }
 
 
 // declaration of the user class, which affects positioning of elements on the canvas 
 class User {
 
-    name
-    // pixels away from centre of screen 
-    x = 0
-    y = 0
+  name
+  // pixels away from centre of screen 
+  x = 0
+  y = 0
 
-    sf = 20 // base size factor (temporary fixed value - will later be dependent on width and height of screen) 
-    zoom = 0 // zoom level 
-    s = this.sf * exp(this.zoom) // size factor adjusted to zoom 
-    zoomIncrement = 0.2
-    maxZoom = 2
-    zoomType = "mouse" // mouse-relative or screen-centre-relative 
+  sf = 20 // base size factor (temporary fixed value - will later be dependent on width and height of screen) 
+  zoom = 0 // zoom level 
+  s = this.sf * exp(this.zoom) // size factor adjusted to zoom 
+  zoomIncrement = 0.2
+  maxZoom = 2
+  zoomType = "mouse" // mouse-relative or screen-centre-relative 
 
-    constructor (name) {this.name = name}
+  settings = {
+    pageTheme: "light",
+  }
 
-    move (dx, dy) {
-        this.x -= dx
-        this.y += dy
+  constructor (name) {this.name = name}
+
+  move (dx, dy) {
+    this.x -= dx
+    this.y += dy
+  }
+
+  zoomFunction (event) {
+    this.zoom -= this.zoomIncrement * event.deltaY / 100 // +- the zoom increment per mouse scroll (deltaY is 0, 100 or -100) 
+    if (this.zoom < -maxZoom) {this.zoom = -maxZoom}
+    else if (this.zoom > maxZoom) {this.zoom = maxZoom} // prevents scrolling too much 
+    else {
+      if (this.zoomType == "mouse") {player1.x += event.x - w/2; player1.y -= event.y - h/2} // moves centre to cursor position 
+      player1.x *= exp(event.deltaY < 0 ? this.zoomIncrement : -this.zoomIncrement)
+      player1.y *= exp(event.deltaY < 0 ? this.zoomIncrement : -this.zoomIncrement)
+      if (this.zoomType == "mouse") {player1.x -= event.x - w/2; player1.y += event.y - h/2} // moves centre back (mouse-centred scrolling) 
     }
+  this.s = this.sf * exp(this.zoom) // zoom level is applied exponentially for smoother feel (base is arbitrary) 
+  }
 
-    zoomFunction (event) {
-        this.zoom -= this.zoomIncrement * event.deltaY / 100 // +- the zoom increment per mouse scroll (deltaY is 0, 100 or -100) 
-        if (this.zoom < -maxZoom) {this.zoom = -maxZoom}
-        else if (this.zoom > maxZoom) {this.zoom = maxZoom} // prevents scrolling too much 
-        else {
-            if (this.zoomType == "mouse") {player1.x += event.x - w/2; player1.y -= event.y - h/2} // moves centre to cursor position 
-            player1.x *= exp(event.deltaY < 0 ? this.zoomIncrement : -this.zoomIncrement)
-            player1.y *= exp(event.deltaY < 0 ? this.zoomIncrement : -this.zoomIncrement)
-            if (this.zoomType == "mouse") {player1.x -= event.x - w/2; player1.y += event.y - h/2} // moves centre back (mouse-centred scrolling) 
-        }
-        this.s = this.sf * exp(this.zoom) // zoom level is applied exponentially for smoother feel (base is arbitrary) 
-    }
+  // function to draw an object (rotation coming soon) given its centre coordinates (and relative to user position) 
+  drawSomething (obj, cx, cy) {
+    c.save()
+    c.translate(cx - this.x, cy + this.y)
+    obj.draw()
+    c.restore()
+  }
 
-    // function to draw an object (rotation coming soon) given its centre coordinates (and relative to user position) 
-    drawSomething (obj, cx, cy) {
-        c.save()
-        c.translate(cx - this.x, cy + this.y)
-        obj.draw()
-        c.restore()
-    }
+  toggleTheme () {
+    this.settings.pageTheme = (this.settings.pageTheme == "light" ? "dark" : "light")
+    this.saveSettings()
+  }
 
-    reset () {
-        this.x = 0
-        this.y = 0
-        this.zoom = 0
-        this.s = this.sf
-    }
+  saveSettings () {localStorage.setItem("userSettings", JSON.stringify(this.settings))}
+  loadSettings () {
+    if (localStorage.userSettings) {this.settings = JSON.parse(localStorage.getItem("userSettings"))}
+    else {console.log("Local storage `settings` empty")}
+  }
+
+  reset () {
+    this.x = 0
+    this.y = 0
+    this.zoom = 0
+    this.s = this.sf
+  }
 
 }
 
 let currentUser = new User("Bob")
+currentUser.loadSettings()
