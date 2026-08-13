@@ -62,6 +62,8 @@ p {
 a {color: var(--link-color)}
 li {color: var(--text-color)}
 
+.re-list {list-style: none}
+
 c, pre {
   font-family: ui-monospace, Menlo, Consolas, monospace;
   font-size: 0.9em;

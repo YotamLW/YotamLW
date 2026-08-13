@@ -11,7 +11,7 @@ WebIE (Website of Independent Education) is a project with the goal of creating 
 
 ### Projects 
 
-Strawberry - a local music file player I am building for my arch-linux OS 
+Cacofonix - a local music file player I am building for my arch-linux OS 
 
 ## Licensing 
 

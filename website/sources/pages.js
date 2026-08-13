@@ -54,6 +54,7 @@ async function loadPage (path, pushState = true) {
   }
 
   refreshTheme()
+  tableOfContents()
 
 }
 
@@ -107,4 +108,14 @@ function refreshTheme () {
     document.documentElement.style.setProperty("--chapter-color", "#69c5fa")
     document.documentElement.style.setProperty("--section-color", "#007efc")
   }
+}
+
+// sets up table of contents links
+function tableOfContents () {
+  document.querySelectorAll(".toc").forEach(link => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault()
+      document.getElementById(link.getAttribute("data-scroll-to"))?.scrollIntoView({behavior: "instant"})
+    })
+  })
 }

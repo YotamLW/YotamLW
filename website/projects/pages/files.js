@@ -4,7 +4,7 @@
 
 let textFiles = [
   "home",
-  "strawberry"
+  "cacofonix"
 ]
 
 let codeFiles = [
