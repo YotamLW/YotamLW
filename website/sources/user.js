@@ -67,6 +67,7 @@ class User {
 
   settings = {
     pageTheme: "light",
+    navigator: false,
   }
 
   constructor (name) {this.name = name}
@@ -99,6 +100,11 @@ class User {
 
   toggleTheme () {
     this.settings.pageTheme = (this.settings.pageTheme == "light" ? "dark" : "light")
+    this.saveSettings()
+  }
+
+  toggleNavigator () {
+    this.settings.navigator = (this.settings.navigator ? false : true)
     this.saveSettings()
   }
 

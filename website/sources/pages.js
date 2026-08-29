@@ -21,6 +21,7 @@ let home = "home"
 let path = home
 let page
 let banner
+let navigator = document.getElementById("navigator")
 
 // this function fetches the banner content  
 async function loadBanner () {
@@ -107,6 +108,14 @@ function refreshTheme () {
     document.documentElement.style.setProperty("--title-color", "#cccccc")
     document.documentElement.style.setProperty("--chapter-color", "#69c5fa")
     document.documentElement.style.setProperty("--section-color", "#007efc")
+  }
+}
+
+function refreshNavigator () {
+  if (currentUser.settings.navigator) {
+    navigator.style.width = "20%"
+  } else {
+    navigator.style.width = "0%"
   }
 }
 

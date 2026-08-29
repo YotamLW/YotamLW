@@ -33,14 +33,26 @@ body {
   padding: 0 1em;
 }
 
+#page {
+  height: calc(100vh - 50px);
+  display: flex;
+  gap: 0;
+}
+
 #pageContent {
-  width: 100%;
+  width: 80%;
   max-width: 1000px;
-  min-height: calc(100vh - 50px);
+  min-height: 100%;
   background-color: var(--page-color);
   box-sizing: border-box;
   margin: 0 auto;
   padding: 0em 1em;
+}
+
+#navigator {
+  width: 20%;
+  max-width: 250px;
+  min-height: 100%;
 }
 
 
