@@ -13,24 +13,28 @@
     <canvas id="screen"></canvas>
     <script src="/sources/macros.js"></script>
     <script src="/sources/user.js"></script>
+    <script src="/pages/files.js"></script>
     <script src="/sources/pages.js"></script>
+    <script src="/sources/mathjax/macros.js"></script>
+    <script src="/sources/mathjax/tex-chtml.js"></script>
     <div id="banner" z-index="1"></div>
+    <div id="page">
+      <div id="navigator" class="hidden" z-index="1"></div>
+      <div id="pageContent" z-index="1"></div>
+    </div>
 </body>
-
-<div id="pageContent" z-index="1">
-
-<h1>Yotam LW</h1>
-<p>This is a website for projects I am working on.</p>
-
-<p>Go to <a href="/webie">WebIE</a></p>
-<p>Go to <a href="/projects">Projects</a></p>
-<p>Go to <a href="javascript:alert('In development')">About me</a></p>
-
-</div>
 
 <script>
 
+// Banner Loading
 banner = document.getElementById("banner")
 loadBanner()
+
+// Page Loading
+page = document.getElementById("pageContent")
+navigator = document.getElementById("navigator")
+path = window.location.hash ? window.location.hash.substring(1) : "/home"
+loadPage(path, false)
+history.replaceState({path}, "", `#${path}`)
 
 </script>

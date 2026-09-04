@@ -34,13 +34,13 @@ body {
 }
 
 #page {
-  height: calc(100vh - 50px);
+  min-height: calc(100vh - 50px);
   display: flex;
   gap: 0;
 }
 
 #pageContent {
-  width: 80%;
+  flex: 1;
   max-width: 1000px;
   min-height: 100%;
   background-color: var(--page-color);
@@ -51,9 +51,12 @@ body {
 
 #navigator {
   width: 20%;
-  max-width: 250px;
+  max-width: 500px;
   min-height: 100%;
+  background-color: var(--navigator-color);
 }
+
+#navigator.hidden {width: 0}
 
 
 /*Text formatting*/
