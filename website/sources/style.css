@@ -81,7 +81,7 @@ li {color: var(--text-color)}
 
 c, pre {
   font-family: ui-monospace, Menlo, Consolas, monospace;
-  font-size: 0.9em;
+  font-size: 0.8em;
   color: var(--text-color);
   background: var(--code-body-color);
   white-space: pre-wrap;

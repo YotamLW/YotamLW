@@ -44,13 +44,12 @@ async function loadPage (path, pushState = true) {
   if (pushState && path[0] != "/") {path = window.location.hash.substring(1).replace("home", "") + path}
   let result = validatePath(path.substring(1).split("/"), 0, root) // initial call to recursive function with root directory, returns [final path, file type (consts in files.js)]
   path = "/" + result[0].join("/")
-  console.log(path)
 
-  if (result[1] == "text" || result[1] == "both") { // loads text
+  if (result[1] == "text" || result[1] == "both") { try { // loads text
     let textResponse = await fetch(`/pages${path}.html`)
     page.innerHTML = await textResponse.text()
     MathJax.typesetPromise() // renders any maths formulas
-  }
+  } catch (error) {console.log(`home not found | ${error}`)} }
 
   if (result[1] == "code" || result[1] == "both") { // loads code
     let script = document.createElement("script")
