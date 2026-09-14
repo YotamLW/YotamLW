@@ -20,8 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 // setting up canvas 
 let canvas = document.getElementById("screen")
 let c = canvas.getContext("2d")
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
+canvas.width = document.body.innerWidth
+canvas.height = document.body.innerHeight
 canvas.style.position = "absolute"
 canvas.style.top = "0"
 canvas.style.left = "0"
@@ -35,8 +35,8 @@ let paused = true
 
 function refreshScreen () {
   paused = true
-  canvas.width = window.innerWidth
-  canvas.height = window.innerHeight
+  canvas.width = document.body.innerWidth
+  canvas.height = document.body.innerHeight
   w = canvas.width
   h = canvas.height
   c.clearRect(0, 0, w, h)
