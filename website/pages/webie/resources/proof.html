@@ -1,2 +1,53 @@
 <h1>Proof</h1>
-<p>Proof in maths is basically a programming language for explaining why something is true for a stated case using logical steps. Axioms are fundamental assumptions used when proving a theorem (the end result).</p>
+
+<h2>How to Write Proof</h2>
+
+<h3>Syntax</h3>
+<p>Proof in maths is basically a programming language for explaining why something is true for a stated case using logical steps. `Axioms` are fundamental assumptions used when proving a `theorem` (the end result). When writing proof, certain symbols are used to make it shorter and quicker to read :</p>
+<ul>
+  <li>The identity symbol $\equiv$ is often used to state axioms or constants, e.g. $\phi\equiv\frac 12(1+\sqrt 5)$.</li>
+  <li>The symbol $\in$ means the element to the left is a member of the set indicated to the right. For example $3\in S$ means $3$ is in the set $S$. Multiple elements can be assigned at the same time, for example $3,x,y,8\in S$.</li>
+  <li>A semicolon means "such that". This is often after an operation of elements have been declared to describe what kind of elements they are (example below with $\mathbb Q$).</li>
+  <li>Capital letters of the "blackboard bold" font are used to represent commonly used sets including: the set of natural numbers $\mathbb N$ = {1, 2, 3, 4...}; the set of integers $\mathbb Z$ = {...-2, -1, 0, 1, 2...}; the set of rational numbers $\mathbb Q$, i.e. numbers that can be written as a fraction with an integer numerator and positive integer numerator, or formally $\mathbb Q=\{\frac pq:p\in\mathbb Z,q\in\mathbb N\}$; and the set of real numbers $\mathbb R$ (includes surds and constants like $\pi$). The set $\mathbb N_0$ is natural numbers including zero. Sets can also be superscripted with $+$ or $-$ to only include all numbers greater than or less than zero (respectively) in that set, for example $\mathbb N=\mathbb Z^+$.</li>
+  <li>The symbol $\forall$ means "for all" and is often used to say that something applies for all elements of a set, for example $\forall x\in\mathbb N,x&gt;0$.</li>
+  <li>The symbol $\exists$ means "there exists".</li>
+  <li>The arrows $\implies$ (left implies right), $\impliedby$ (left is implied by right) and $\iff$ (both imply each other, often said as "if an only if" or "iff") shows what the expressions imply, for example $a=5\implies a^2=25$ and $a$ is odd $\iff$ $a^2$ is odd.</li>
+</ul>
+<p>Zero is not a positive or negative number. Dividing by zero is undefined and infinity is not a number. This means that when prooving something that may cause this a variable should be put in place instead and it should only "approach" or "tend to" these values. For example, $\frac1\infty$ is technically not correct to write, and instead should be written as $\frac1a$ then evaluated as $a$ tends to infinity ($a\rightarrow\infty$) so as $a\rightarrow\infty,\frac1a\rightarrow0$. The `limit` of an expression is the value it tends to, so the previous expression with $a$ tends to 0, but the limit of it is 0. This is written as $\lim_{a\rightarrow\infty}\frac1a=0$ (with the tending expression usually directly below $\lim$). This is more prevalent in topics of calculus.</p>
+
+<h3>Structure</h3>
+<p>A good way to structure a proof is to start with a claim (or conjecture) that is going to be proven, write down the steps of the proof, then write a conclusive statement tying back to the claim once an appropriate solution is found. For example :</p>
+<ul class="no-bullets">
+  <li><u>Claim:</u> If $n$ is an odd integer, then $n^2-1$ is divisible by 8</li>
+  <li style="display: flex; gap: 0.25em"><div style="height: fit-content"><u>Proof:</u></div><div style="flex-grow: 1">
+    If $n$ is odd then $n=2k+1:k\in\mathbb Z$<br>
+    $\begin{align*}
+    n^2-1 &= (2k+1)^2-1\\
+          &= 4k^2+4k+1-1\\
+          &= 4k^2+4k\\
+          &= 4(k^2+k)\\
+          &= 4k(k+1)
+    \end{align*}$<br>
+    Either $k$ or $k+1$ is even because they are consecutive so $k(k+1)$ is divisible by 2<br>
+    The expression $4k(k=1)$ is divisible by 4 and 2, so is divisible by 4 $\times$ 2 = 8<br>
+  </div></li>
+</ul>
+
+<h2>Methods of Proof</h2>
+
+<p>The four most common methods of proof are logical deduction, contradiction, exhaustion and induction. Proof by logical deduction is as shown above; starting with an expression and manipulating until the conjecture becomes apparent. Proof by induction is more relevant in other topics so will be included in their respective pages.</p>
+
+<h3>By Contradiction</h3>
+<p>Proof by contradiction works similarly by starting with a claim, but then assuming the opposite is true and trying to basically debunk the claim. For example :</p>
+<ul class="no-bullets">
+  <li><u>Claim:</u> There are an infinite number of prime numbers</li>
+  <li style="display: flex; gap: 0.25em"><div style="height: fit-content"><u>Proof:</u></div><div style="flex-grow: 1">
+    Suppose there is a finite number of prime numbers<br>
+    Let all the prime numbers be $p_1,p_2,p_3,...,p_n$<br>
+    Let $N=p_1\times p_2\times p_3\times...\times p_n+1$<br>
+    Dividing $N$ by any of the labelled prime numbers will result in a remainder of 1<br>
+    This means that $N$ is a prime number, but it is greater than any of the prime numbers in the initial labelled list<br>
+    This means it is not in the list of finite prime numbers, therefore the assumption that there are finite prime numbers was wrong<br>
+    There is an infinite number of prime numbers<br>
+  </div></li>
+</ul>

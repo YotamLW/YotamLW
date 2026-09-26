@@ -43,6 +43,7 @@ body {
   flex: 1;
   max-width: 1000px;
   min-height: 100%;
+  color: var(--text-color);
   background-color: var(--page-color);
   box-sizing: border-box;
   margin: 0 auto;
@@ -69,20 +70,15 @@ h1 {color: var(--title-color)}
 h2 {color: var(--chapter-color)}
 h3 {color: var(--section-color)}
 
-p {
-  color: var(--text-color);
-  text-align: justify;
-}
+p {text-align: justify;}
 
 a {color: var(--link-color)}
-li {color: var(--text-color)}
 
-.re-list {list-style: none}
+.no-bullets {list-style: none}
 
 c, pre {
   font-family: ui-monospace, Menlo, Consolas, monospace;
   font-size: 0.8em;
-  color: var(--text-color);
   background: var(--code-body-color);
   white-space: pre-wrap;
   overflow-wrap: anywhere;

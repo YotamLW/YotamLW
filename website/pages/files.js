@@ -58,6 +58,7 @@ let root = {
     "home": text,
     "resources": {
       "home": text,
+      "proof": text,
       "fundamentals": text,
       "algebra": text,
       "computer_science": both,
