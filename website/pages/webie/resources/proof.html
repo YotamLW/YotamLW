@@ -1,5 +1,7 @@
 <h1>Proof</h1>
 
+<!--Dependencies required: prime numbers, surds, modular arithmetic, expanding brackets-->
+
 <h2>How to Write Proof</h2>
 
 <h3>Syntax</h3>
@@ -28,26 +30,89 @@
           &= 4(k^2+k)\\
           &= 4k(k+1)
     \end{align*}$<br>
-    Either $k$ or $k+1$ is even because they are consecutive so $k(k+1)$ is divisible by 2<br>
-    The expression $4k(k=1)$ is divisible by 4 and 2, so is divisible by 4 $\times$ 2 = 8<br>
+    Either $k$ or $k+1$ is even because they are consecutive numbers so $k(k+1)$ is divisible by 2<br>
+    The expression $4k(k+1)$ is divisible by 4 and 2 independently, so is divisible by 4 $\times$ 2 = 8<br>
   </div></li>
 </ul>
 
 <h2>Methods of Proof</h2>
 
-<p>The four most common methods of proof are logical deduction, contradiction, exhaustion and induction. Proof by logical deduction is as shown above; starting with an expression and manipulating until the conjecture becomes apparent. Proof by induction is more relevant in other topics so will be included in their respective pages.</p>
+<p>The four most common methods of proof are logical deduction, contradiction, cases and induction. Proof by logical deduction is as shown above; starting with an expression and manipulating until the conjecture becomes apparent. Proof by induction is more relevant in other topics so will be included in their respective pages.</p>
+
+<h3>By Deduction</h3>
+<p>Proof by deduction is just "vanilla" algebraic manipulation, for example :</p>
+<ul class="no-bullets">
+  <li><u>Claim:</u> $(n+1)^3-n^3$ is always one more than a multiple of 3</li>
+  <li style="display: flex; gap: 0.25em"><div style="height: fit-content"><u>Proof:</u></div><div style="flex-grow: 1">
+    The expression $(n+1)^3-n^3-1$ should be divisible by $3$<br>
+    $\begin{align*}
+    (n+1)^3-n^3-1 &= n^3+3n^2+3n+1-n^3-1\\
+                  &= 3n^2+3n\\
+                  &= 3(n^2+n)
+    \end{align*}$<br>
+    The expression is divisible by $3$ therefore $(n+1)^3-n^3$ is always one more than a multiple of 3
+  </div></li>
+</ul>
 
 <h3>By Contradiction</h3>
-<p>Proof by contradiction works similarly by starting with a claim, but then assuming the opposite is true and trying to basically debunk the claim. For example :</p>
+<p>Proof by contradiction works by starting with a claim, but then assuming the opposite is true and trying to debunk the claim. For example :</p>
 <ul class="no-bullets">
   <li><u>Claim:</u> There are an infinite number of prime numbers</li>
   <li style="display: flex; gap: 0.25em"><div style="height: fit-content"><u>Proof:</u></div><div style="flex-grow: 1">
     Suppose there is a finite number of prime numbers<br>
     Let all the prime numbers be $p_1,p_2,p_3,...,p_n$<br>
-    Let $N=p_1\times p_2\times p_3\times...\times p_n+1$<br>
+    Let $N=(p_1\times p_2\times p_3\times...\times p_n)+1$<br>
+    $N$ is larger than any of the prime numbers because it is their product plus 1<br>
     Dividing $N$ by any of the labelled prime numbers will result in a remainder of 1<br>
-    This means that $N$ is a prime number, but it is greater than any of the prime numbers in the initial labelled list<br>
-    This means it is not in the list of finite prime numbers, therefore the assumption that there are finite prime numbers was wrong<br>
-    There is an infinite number of prime numbers<br>
+    This means that either $N$ is a prime numebr not in the initial list or $N$ is divisible by a prime number not in the initial list<br>
+    Therefore the original assumption that there are a finite number of prime numbers was wrong<br>
+    There is an infinite number of prime numbers
+  </div></li>
+</ul>
+<ul class="no-bullets">
+  <li><u>Claim:</u> $\sqrt2$ is irrational</li>
+  <li style="display: flex; gap: 0.25em"><div style="height: fit-content"><u>Proof:</u></div><div style="flex-grow: 1">
+    Suppose $\sqrt2$ is a rational number, so $\sqrt2=\frac ab:a\in\mathbb Z,b\in\mathbb Z^+$<br>
+    Squaring gives $2=\frac{a^2}{b^2}$<br>
+    Both $a^2$ and $b^2$ are made up of an even number of primes because they have been squared<br>
+    Rearranging the equation $2=\frac{a^2}{b^2}$ gives $a^2=2b^2$<br>
+    This equation suggests that $a^2$ is made up of an odd number of primes - the even number of 2s plus the extra 2<br>
+    This contradicts the fact that $a^2$ has an even number of primes and therefore that $2$ can be written as $\frac ab$<br>
+    So $\sqrt2$ is irrational
+  </div></li>
+</ul>
+
+<h3>By Cases</h3>
+<p>Proof by cases is when cases are picked to prove independently as part of a claim, for example first proving the claim true for even integers then for odd integers. The most commmon cases are odd and even, or more generally, testing if divisible by any positive integer $n$ for cases $nk+p:p\in\mathbb N_0,p&lt;n$ (odd and even is $n=2$). Proof by exhaustion is a subset where there are few enough cases to check each manually (e.g. for $n\in\mathbb N,n&lt;6$). Examples :</p>
+<ul class="no-bullets">
+  <li><u>Claim:</u> $n^3-n$ is even for all positive integer values of $n$</li>
+  <li style="display: flex; gap: 0.25em"><div style="height: fit-content"><u>Proof:</u></div><div style="flex-grow: 1">
+    If $n$ is even let $n=2k:k\in\mathbb Z^+$<br>
+    $\begin{align*}
+    n^3-n &= (2k)^3-2k\\
+          &= 8k^3-2k\\
+          &= 2(4k^3-k)
+    \end{align*}$<br>
+    So if $n$ is even, $n^3-n$ is also even<br>
+    If $n$ is odd let $n=2k-1:k\in\mathbb Z^+$<br>
+    $\begin{align*}
+    n^3-n &= (2k-1)^3-(2k-1)\\
+          &= 8k^3-12k^2+6k-1-2k+1\\
+          &= 8k^3-12k^2+4k\\
+          &= 2(4k^3-6k^2+2k)
+    \end{align*}$<br>
+    So if $n$ is odd, $n^3-n$ is even<br>
+    These two cases cover all positive integer values so $n^3-n$ is even for all positive integer values of $n$
+  </div></li>
+</ul>
+<ul class="no-bullets">
+  <li><u>Claim:</u> Every square number leaves a remainder of 0 or 1 when divided by 4</li>
+  <li style="display: flex; gap: 0.25em"><div style="height: fit-content"><u>Proof:</u></div><div style="flex-grow: 1">
+    Let $k\in\mathbb\ Z$<br>
+    For $n=4k$, $n^2$ has remainder 0<br>
+    For $n=4k+1$, $n^2=16k^2+8k+1=4(4k^2+2k)+1$ so has remainder 1<br>
+    For $n=4k+2$, $n^2=16k^2+16k+4=4(4k^2+4k+1)$ so has remainder 0<br>
+    For $n=4k+3$, $n^2=16k^2+24k+9=4(4k^2+6k+2)+1$ so has remainder 1<br>
+    Therefore all square numbers leave a remainder of either 0 or 1 when divided by 4
   </div></li>
 </ul>
