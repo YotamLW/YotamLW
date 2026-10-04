@@ -20,23 +20,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 // setting up canvas 
 let canvas = document.getElementById("screen")
 let c = canvas.getContext("2d")
-canvas.width = document.body.innerWidth
-canvas.height = document.body.innerHeight
-canvas.style.position = "absolute"
-canvas.style.top = "0"
-canvas.style.left = "0"
-canvas.style.zIndex = "0"
-canvas.style.pointerEvents = "none"
-
-// UI global variables 
-let w = canvas.width // screen width 
-let h = canvas.height // screen height 
+let w = canvas.width
+let h = canvas.height
 let paused = true
 
 function refreshScreen () {
-  paused = true
-  canvas.width = document.body.innerWidth
-  canvas.height = document.body.innerHeight
+  canvas.width = content.scrollWidth
+  canvas.height = content.scrollHeight
   w = canvas.width
   h = canvas.height
   c.clearRect(0, 0, w, h)
@@ -45,7 +35,7 @@ function refreshScreen () {
 function loop () {
   if (paused) return
   c.clearRect(0, 0, w, h)
-  c.fillRect(w-10, h-10, 10, 10)
+  logic()
   window.requestAnimationFrame(loop)
 }
 

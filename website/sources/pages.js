@@ -17,11 +17,10 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>. 
 */
 
+let debug = false
+
 let home = "home"
 let path = home
-let page
-let banner
-let navigator
 
 async function loadBanner () {
   let content = await fetch("/sources/banner.html")
@@ -60,12 +59,13 @@ async function loadPage (path, pushState = true) {
   }
 
   if (pushState) {history.pushState({path}, "", `#${path}`)}
-  refreshTheme()
   tableOfContents()
+  refreshTheme()
+  requestAnimationFrame(() => {refreshScreen()})
 
 }
 
-// recursive function to validate file path, returning an appropriate path and what type of files there are (absed on files.js)
+// recursive function to validate file path, returning an appropriate path and what type of files there are (based on files.js)
 function validatePath (pathComponents, i, currentDirectory) { // (input unvalidated filepath, depth, current directory of depth)
   let next = currentDirectory[pathComponents[i]] // loads value of next key target destination (directory or file)
   if (typeof(next) == "object") { // directory
@@ -75,19 +75,6 @@ function validatePath (pathComponents, i, currentDirectory) { // (input unvalida
   }
   else if (typeof(next) == "string") {return [[pathComponents[i]], next]} // files | returns [file name (inside array), file types]
   else return [["home"], "text"] // returns home file of current directory in case file was not found
-}
-
-// updates page using hashes to allow for back button usage
-function updateHistory (path) {
-  
-}
-
-function blah (path) {
-  let pathway = path.split("/")
-  console.log(pathway)
-  if (pathway.at(-1) == home) {history.pushState({path}, "", `#${pathway.splice(0, pathway.length - 1).join("/")}`)}
-  else {history.pushState({path}, "", `#${path}`)}
-  console.log(history)
 }
 
 // loads page from history when using back / forward buttons
