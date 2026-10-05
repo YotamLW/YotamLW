@@ -25,18 +25,5 @@ function vectorSum (a) {let sum = 0; for (let i = 0; i < a.length; i++) {sum += 
 function vectorMod (a) {let sum = 0; for (let i = 0; i < a.length; i++) {sum += a[i] ** 2}; return rt(sum)}
 function vectorAdd (a, b) {return a.map((value, i) => value + b[i])}
 function vectorSub (a, b) {return a.map((value, i) => value - b[i])}
-function vectorDot (a, b) {
-  let sum = 0
-  for (let i = 0; i < a.length; i++) {sum += a[i] * b[i]}
-  return sum
-}
+function vectorDot (a, b) {let sum = 0; for (let i = 0; i < a.length; i++) {sum += a[i] * b[i]}; return sum}
 function vectorCross3 (a, b) {return [a[2]*b[3]-b[2]*a[3], a[3]*b[1]-b[3]*a[1], a[1]*b[2]-b[1]*a[2]]}
-
-class Plane {
-
-  constructor (normal, point) {
-    this.normal = normal
-    this.point = point
-  }
-
-}
