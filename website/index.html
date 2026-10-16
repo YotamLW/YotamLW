@@ -1,34 +1,33 @@
 <!DOCTYPE html>
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Contains my projects, my notes, webie and about me.">
-    <title>Yotam LW</title>
-    <link rel="icon" type="image/x-icon" sizes="16x16" href="favicon.ico?v=2">
-    <link rel="stylesheet" href="/sources/style.css">
+  <title>Yotam LW</title>
+  <meta name="description" content="Contains my projects, my notes, WebIE and about me.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/sources/style.css">
+  <link rel="icon" type="image/x-icon" sizes="16x16" href="favicon.ico?v=2">
 </head>
 
 <body>
-    <div id="banner"></div>
-    <div id="content">
-      <canvas id="screen"></canvas>
-      <div id="navigator" class="hidden"></div>
-      <div id="page"></div>
-    </div>
-    <script src="/sources/macros.js"></script>
-    <script src="/sources/user.js"></script>
-    <script src="/pages/files.js"></script>
-    <script src="/sources/pages.js"></script>
-    <script src="/sources/mathjax/macros.js"></script>
-    <script src="/sources/mathjax/tex-chtml.js"></script>
+  <div id="banner"></div>
+  <div id="content">
+    <canvas id="screen"></canvas>
+    <div id="navigator" class="hidden"></div>
+    <div id="page"></div>
+  </div>
 </body>
+
+<script src="/sources/macros.js"></script>
+<script src="/sources/files.js"></script>
+<script src="/sources/content.js"></script>
+<script src="/sources/user.js"></script>
+<script src="/sources/mathjax/macros.js"></script>
+<script src="/sources/mathjax/tex-chtml.js"></script>
 
 <script>
 
-loadBanner()
-path = window.location.hash ? window.location.hash.substring(1) : "/home"
-loadPage(path, false)
+const path = window.location.hash ? window.location.hash.substring(1) : "/home"
+currentUser.loadPage(path, false)
 history.replaceState({path}, "", `#${path}`)
 
 </script>

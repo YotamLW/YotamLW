@@ -17,95 +17,79 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>. 
 */
 
-// setting up canvas 
-let canvas = document.getElementById("screen")
-let c = canvas.getContext("2d")
-let w = canvas.width
-let h = canvas.height
-let paused = true
 
-function refreshScreen () {
-  canvas.width = content.scrollWidth
-  canvas.height = content.scrollHeight
-  w = canvas.width
-  h = canvas.height
-  c.clearRect(0, 0, w, h)
-}
-
-function loop () {
-  if (paused) return
-  c.clearRect(0, 0, w, h)
-  logic()
-  window.requestAnimationFrame(loop)
-}
-
-
-// declaration of the user class, which affects positioning of elements on the canvas 
 class User {
 
-  name
-  // pixels away from centre of screen 
-  x = 0
-  y = 0
-
-  sf = 20 // base size factor (temporary fixed value - will later be dependent on width and height of screen) 
-  zoom = 0 // zoom level 
-  s = this.sf * exp(this.zoom) // size factor adjusted to zoom 
-  zoomIncrement = 0.2
-  maxZoom = 2
-  zoomType = "mouse" // mouse-relative or screen-centre-relative 
-
   settings = {
-    pageTheme: "light",
+    darkMode: false,
+    currentPath: "/home",
+    retainCurrentPath: true,
   }
 
-  constructor (name) {this.name = name}
-
-  move (dx, dy) {
-    this.x -= dx
-    this.y += dy
+  constructor (name) {
+    this.name = name
+    this.banner = new Banner("banner")
+    this.page = new Page("page")
+    this.canvas = new Canvas("screen", content)
   }
 
-  zoomFunction (event) {
-    this.zoom -= this.zoomIncrement * event.deltaY / 100 // +- the zoom increment per mouse scroll (deltaY is 0, 100 or -100) 
-    if (this.zoom < -maxZoom) {this.zoom = -maxZoom}
-    else if (this.zoom > maxZoom) {this.zoom = maxZoom} // prevents scrolling too much 
-    else {
-      if (this.zoomType == "mouse") {player1.x += event.x - w/2; player1.y -= event.y - h/2} // moves centre to cursor position 
-      player1.x *= exp(event.deltaY < 0 ? this.zoomIncrement : -this.zoomIncrement)
-      player1.y *= exp(event.deltaY < 0 ? this.zoomIncrement : -this.zoomIncrement)
-      if (this.zoomType == "mouse") {player1.x -= event.x - w/2; player1.y += event.y - h/2} // moves centre back (mouse-centred scrolling) 
-    }
-  this.s = this.sf * exp(this.zoom) // zoom level is applied exponentially for smoother feel (base is arbitrary) 
-  }
+  loadPage (path, pushHistoryState = true) {
+    path = path.split("/")
+    let pathComponents = this.settings.currentPath.split("/")
+    pathComponents.pop()
+    if (path[0] == "") {pathComponents = path}
+    else {pathComponents.push(...path)}
+    pathComponents.shift()
 
-  // function to draw an object (rotation coming soon) given its centre coordinates (and relative to user position) 
-  drawSomething (obj, cx, cy) {
-    c.save()
-    c.translate(cx - this.x, cy + this.y)
-    obj.draw()
-    c.restore()
-  }
+    let result = this.validatePath(pathComponents, 0, pages)
+    let page = result[0]
+    const directoryPath = wrap(result[1], "/")
 
-  toggleTheme () {
-    this.settings.pageTheme = (this.settings.pageTheme == "light" ? "dark" : "light")
+    this.banner.load()
+    this.page.load(page, directoryPath)
+    this.canvas.load(page, directoryPath)
+
+    path = directoryPath + page.name
+    if (pushHistoryState) {history.pushState({path}, "", `#${path}`)}
+    this.settings.currentPath = path
     this.saveSettings()
   }
 
-  saveSettings () {localStorage.setItem("userSettings", JSON.stringify(this.settings))}
-  loadSettings () {
-    if (localStorage.userSettings) {this.settings = JSON.parse(localStorage.getItem("userSettings"))}
-    else {console.log("Local storage `settings` empty")}
+  // returns appropriate page instance and validated path
+  validatePath (pathComponents, i, currentDirectory) {
+    const next = currentDirectory.findChild(pathComponents[i])
+    if (next instanceof Directory) {
+      let result = this.validatePath(pathComponents, i+1, next)
+      result[1].unshift(next.name)
+      return result
+    }
+    else if (next instanceof File) {return [next, []]}
   }
 
-  reset () {
-    this.x = 0
-    this.y = 0
-    this.zoom = 0
-    this.s = this.sf
+  toggleTheme () {this.settings.darkMode = !this.settings.darkMode; this.saveSettings()}
+
+  saveSettings () {localStorage.setItem("userSettings", JSON.stringify(this.settings))}
+  loadSettings () {
+    if (localStorage.userSettings) {
+      const settings = JSON.parse(localStorage.getItem("userSettings"))
+      this.settings.darkMode = settings.darkMode
+      if (settings.retainCurrentPath) {this.settings.currentPath = settings.currentPath}
+    }
+    else {console.log("Local storage 'settings' empty")}
   }
 
 }
 
+// loads page from history when using back / forward buttons
+window.addEventListener("popstate", (event) => {
+  if (event.state?.path) {
+    currentUser.loadPage(event.state.path, false)
+  }
+})
+
+
+
 let currentUser = new User("Bob")
 currentUser.loadSettings()
+
+function loadPage (path) {currentUser.loadPage(path)}

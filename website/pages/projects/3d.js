@@ -151,7 +151,11 @@ let world1 = new World()
 
 let player1 = new Player(world1, 2)
 
-function logic () {
+let c = currentUser.canvas.c
+let w = currentUser.canvas.w
+let h = currentUser.canvas.h
+
+function logic (canvas) {
   c.fillStyle = "gray"
   c.fillRect(0, 0, w, h)
   player1.updatePerspective()
