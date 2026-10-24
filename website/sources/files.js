@@ -22,44 +22,6 @@ class File extends Node {
     if (type == "code") {this.codeFiles.push(name)}
   }
 
-  load (user, pushHistoryState, path) {
-    user.page.innerHTML = ""
-    document.querySelectorAll(".pageAnimations").forEach(script => script.remove())
-    user.canvas.paused = true
-    user.canvas.refreshCanvas()
-    const directoryPath = path.slice(0, path.lastIndexOf("/") + 1)
-    this.loadText(user.page, directoryPath)
-    this.loadCode(directoryPath)
-
-    console.log(pushHistoryState)
-    if (pushHistoryState) {history.pushState({path}, "", `#${path}`)}
-  }
-
-  async loadText (pageElement, path) {
-    for (let file of this.textFiles) {
-      try {
-        const pageResponse = await fetch(`/pages${path}${file}.html`)
-        pageElement.innerHTML = await pageResponse.text()
-        MathJax.typesetPromise() // renders maths
-        tableOfContents()
-        refreshTheme()
-      } catch (error) {console.log(`HTML not loaded | ${error}`)}
-    }
-  }
-
-  async loadCode (path) {
-    for (let file of this.codeFiles) {
-      const file = codeFiles[i]
-      try {
-        let script = document.createElement("script")
-        script.src = `/pages${path}${file}.js`
-        script.id = file
-        document.body.appendChild(script)
-        script.onload = () => {currentUser.canvas.enable()} // initiates animation loop
-      } catch (error) {console.log(`JS not loaded | ${error}`)}
-    }
-  }
-
 }
 
 class Directory extends Node {
@@ -88,7 +50,10 @@ const pages = new Directory("root", [
   new Directory("projects", [
     new File("cacofonix"),
     new Directory("linux", [
-      new File("installation")
+      new File("installation"),
+      new File("users"),
+      new File("ssh_git"),
+      new File("dwm"),
     ]),
     new File("3d", "code"),
   ]),

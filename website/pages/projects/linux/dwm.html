@@ -1,0 +1,6 @@
+<h1>DWM</h1>
+<p>X11 and Wayland are two things needed for graphical display which I could not find coherent explanations of, so I will learn it later.</p>
+<p>DWM is a window manager, windows being the bounding box that graphical apps occupy. This is often what people confuse with an operating system, because a window manager is what you can actually see (apart from the tty consoles). DWM runs on X11, so you will need to install at least <c>xorg-server xorg-init xorg-xsetroot xorg-xset</c>. If you use an nvidia graphics card, you should install <c>nvidia-open nvidia-utils nvidia-settings</c> (or <c>nvidia</c> instead of open for cards not GTX 16xx, RTX 20xx or newer, double check).</p>
+dwm, st, clone, learn how to patch so updating works, connect to git page, fonts, screen tearing
+
+graphics card, nvidia-open, nvidia-utils, nvidia-settings, add nvidia_drm.modeset=1, add to MODULES in /etc/mkinitcpio.conf "nvidia nvidia_modeset nvidia_uvm nvidia_drm", sudo mkinitcpio -P, reboot, verify with nvidia-smi

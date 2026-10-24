@@ -1,0 +1,6 @@
+<h1>Users Guide</h1>
+<p>Users are different logins that allow system permissions to be managed. Users can be put into Groups, which are like permission presets, for example "users of group student can only access their own home directory".</p>
+<p>Privilege escalation is when a user uses a tool to do something beyond their default permission. Common tools include <c>sudo</c> or <c>doas</c>. I will be using sudo because it has more features and I plan to experiment with multi-user systems. To use sudo, first install the <c>sudo</c> package, then edit the file using <c>EDITOR=vim visudo</c> (replace vim with editor of choice). Scroll down to the bottom and uncomment one of the %wheel lines, which allows users of the group wheel to execute commands as root using the sudo command either with or without needing a password. The group is called wheel because of the 1940s slang "big wheel" for important person.</p>
+<p>To create a user of the wheel group, use the command <c>useradd -m -G wheel -s /bin/bash username</c>, where <c>-m</c> creates a directory for them in <c>/home</c> and <c>-s</c> sets their default shell. To set the user's password, enter <c>passwd username</c>.</p>
+
+id -u for id
