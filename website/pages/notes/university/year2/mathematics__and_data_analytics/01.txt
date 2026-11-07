@@ -1,0 +1,50 @@
+-- Sequences & Series
+
+Throughout, $n$ is the index of a sequence element ($n=0$ is the index of the initial element)
+A summation of a sequence is called a series, and is the addition of all elements from $n=0$ up to and including $n=n$
+
+An arithmetic sequence is one where each subsequent element has a common added difference, e.g. $1,2.5,4,4.5\dots$
+Arithmetic sequence : $a_n=a_0+d(n-1)$ where a_0 is the initial element and $d$ is the difference
+Arithmetic series : $S_n=\frac 12n(2a_0+d(n-1))$, or also $S_n=\frac 12n(a_0+a_n)$
+The example can be defined as $a_n=1+1.5(n-1)$
+
+A geometric sequence is one where each subsequent element has a common multiplied difference, e.g. $1,0.5,0.25,0.125\dots$
+Geometric sequence : $a_n=a_0r^{n-1}$ where $r$ is the multiplier
+Geometric series : $S_n=a\frac{1-r^n}{1-r}$
+If $|r|<1$, as $\n\rightarrow\infty$ then $S_\infty=\frac a{1-r}$ (sum to infinity of sequence)
+The sum to infinity of the previous example is $\frac 1{1-0.5}=2$
+
+For summations, $r$ is used as the incremented variable and $n$ is used as the maximum value of the variable (both are integers and the increment is 1)
+With summation notation, the start is put below the symbol and the end is put above (can also be top-right and bottom-right)
+Additions within a summation can be separated, e.g. $\sum^n_{r=1}r+r^2=\sum^n_{r=1}r+\sum^n_{r=1}$
+Any coefficient / variable independent of the incrementation can also be factorised out, e.g. $\sum^n_{r=1}3x+2yr=3x\sum^n_{r=1}1+2y\sum^n_{r=1}r$
+For summations that start with $r>1$, split it into a subtraction of the sum 1 to $r$ from the sum 1 to $n$
+
+The sum of integers : $\sum^n_{r=1}1=n$
+The sum of $r$ : $\sum^n_{r=1}r=\frac 12n(n+1)$
+The sum of $r^2$ : $\sum^n_{r=1}r^2=\frac 16n(n+1)(2n+1)$
+The sum of $r^3$ : $\sum^n_{r=1}r^3=\frac 14n^2(n+1)^2$
+When finding the sum of a factorised equation, expand it into a polynomial and split it into separate summations
+
+When finding the sum of polynomial denominators, split it into partial fractions and solve separately
+Method of differences is where you list the partial fractions for each case, then see which terms cancel out between cases
+You do this with the first few cases (until you find the pattern) then with the last few cases, then the series is the summation of these terms
+Partial fractions are bottom heavy so will always converge {talk about separating top heavy}
+The limit is the constant term of the series
+To show limits, factorise top-heavy fraction or divide numerator and denominator by highest polynomial term
+
+Ratio test is for series $\sum^\infty_{r=0}a_r$ where $a_r\geq0\forall r$
+For this, the limit $L$ of the ratio of consecutive terms is calculated : $\lim_{r\rightarrow\infty}\frac{a_{r+1}}{a_r}
+If $L<1$, the series is convergent; if $L>1$, the series is divergent; and if $L=1$, the test is inconclusive
+
+Infinite things be goofy, so some series, particularly those with negative and positive terms, can be re-arranged to be either convergent or divergent, so are only conditionaly convergent as opposed to absolutely convergent
+Because of this, an absolutely converging series is defined as $\sum^\infty_{r=0}|a_r|=L$
+
+Polynomials can be used to approximate other curves, an example being Maclaurin polynomials
+Maclaurin polynomials $p(x)$ are found using $p(x)=f(0)+\frac{f'(0)}{1!}x+\frac{f''(0)}{2!}x^2+\frac{f'''(0)}{3!}x^3+\dots$ or $p(x)=\sum^n_{r=0}\frac{f^{(r)}(0)}{r!}x^r$ (if all derivatives of the functions are defined)
+A higher value of $n$ (order of polynomial) means a more accurate approximation
+Can replace the input to these series with higher order terms / coefficients
+If the input has multiple terms, do some funky stuff to get it into an addition of different Maclaurin series with single-term inputs
+Don't be shy to multiply different series together
+You can also expand a Maclaurin series inside another one
+For these cases, ignore any operations that result in higher order term than the degree you are interested in (e.g. if 4 ignore all $x^5$ and higher)

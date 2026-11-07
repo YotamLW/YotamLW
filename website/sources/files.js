@@ -75,6 +75,7 @@ const pages = new Directory("root", [
   new Directory("webie", [
     new File("fundamentals"),
     new File("proof"),
+    new File("sources")
   ]),
 
   // About Me

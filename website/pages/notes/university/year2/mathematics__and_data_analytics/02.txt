@@ -1,0 +1,32 @@
+Matrices can be partitioned into submatrices with lines
+The trace of a square matrix ($Tr(A)$) is the sum of the elements of it's diagonal ($a_{nn}$)
+A symmetric matrix $A$ is equal to its transpose $A'$ (reflected about diagonal)
+A skew-symmetric matrix is where $A=-A'$
+For any square matrix $A$, $AA'$ and $A+A'$ are symmetric and $A-A'$ is skew-symmetric
+Every square matrix can be written as a sum of a symmetric and a skew-symmetric matrix
+
+A quadratic form is a polynomial of $n$ variables where all terms are of order 2 (including same term) and is denoted $Q(x_1,x_2,\dots,x_n)$
+This is written as $\sum^n_{i=1}\sum^n_{j=1}a_{ij}x_ix_j$
+Quadratic forms can be written as a matrix of $x'Ax$ where $x$ is an $n\times1$ matrix of the variables and $A$ is an $n\times n$ symmetric matrix where each element is the addition of the two variables it is associated with divided by 2{Ill explain better later}
+A polynomial with all terms can be written as $x'Ax+b'x+c$ where $b$ is an $n\times1$ vector of order 1 coefficients and $c$ is a constant
+
+A vector is linearly dependent to other vectors if it can be defined as a sum of them, otherwise it is linearly independent
+Any matrix has the same number of linearly independent rows as columns
+Maximum number (the rank) is how many non-zero rows there are in the matrix's row-echelon form
+For an $n\times m$ matrix, its rank is the size of the largest square matrix within it that has a non-zero determinant
+So can verify either with row-echelon or determinants
+
+
+A pseudo-inverse $n\times m$ matrix $A^+$ of an $m\times n$ matrix $A$ is one such that $AA^+=I_m$ and $A^+A=I_n$
+If $m<n$ (wide), then the right pseudo-inverse matrix $A^+_R=A'(AA')^{-1}$ and $AA^+_R=I_m$
+If $m>n$ (tall), then the left pseudo-inverse matrix $A^+_L=(A'A)^{-1}A'$ and $A^+_LA=I_n$
+
+Linear simulatneous equations $Ax=b$ can be estimated with pseudo-inverse matrices
+Can either have no solution, unique solution or infinite solutions
+If $m>n$ the system is over-determined and has no unique due to inconsistency
+If $m<n$ the system is under-determined and has infinite solutions
+A left pseudo inverse matrix is useful for overdetermined inaccurate systems to approximate $x$ by $x=A^+_Lb$
+This is the least square error solution
+The minimum norm solution is $x=A^+_Rb$
+
+{Insert eigenvalues & vectors and all of matrices, might as well}

@@ -96,7 +96,7 @@ a {color: var(--link-color)}
 
 .no-bullets {list-style: none}
 
-c, pre {
+c, pre { /*code*/
   font-family: ui-monospace, Menlo, Consolas, monospace;
   font-size: 0.8em;
   background: var(--code-body-color);
@@ -107,11 +107,19 @@ c, pre {
   border-radius: 3px;
 }
 
-pre {
+pre { /*preformatted text*/
   display: block;
   padding: 0.75em 1em;
   border-radius: 5px;
   line-height: 1.4;
+}
+
+e, eb { /*example*/
+
+}
+
+eb { /*example block*/
+
 }
 
 img {
